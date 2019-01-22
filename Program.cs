@@ -1,6 +1,14 @@
-﻿using Dicom;
+﻿// THIS CODE BELONGS TO Radiation Oncology Intellectual Systems and Services LLC
+// Copyright (c) 2015, ROISS LLC. All rights reserved
+//
+// Author: Gennady Gorlachev (ggorlachev@roiss.ru)
+//---------------------------------------------------------------------------
+// Programm uses Fellow Oak DICOM fo-dicom library
+// (https://github.com/fo-dicom/fo-dicom)")
+//---------------------------------------------------------------------------
+
+using Dicom;
 using Dicom.Imaging;
-using Dicom.IO.Buffer;
 using System;
 using System.IO;
 using System.Linq;
