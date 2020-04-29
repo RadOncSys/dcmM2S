@@ -9,6 +9,7 @@
 
 using Dicom;
 using Dicom.Imaging;
+using Dicom.Imaging.Codec;
 using System;
 using System.IO;
 using System.Linq;
@@ -94,6 +95,7 @@ namespace dcmM2S
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="outRoot"></param>
+        [Obsolete]
         static void ConvertFile(string fileFullName, string outRoot)
         {
             try
@@ -109,7 +111,10 @@ namespace dcmM2S
                     Console.WriteLine("Copying");
                     var fname = outRoot + CreateImageFileName(file);
                     CreatePathToFileIfNeeded(fname);
-                    file.Save(fname);
+
+                    // Change Transfer Syntax to most usual for radiation therapy format
+                    var uncompressedFile = file.Clone(DicomTransferSyntax.ExplicitVRLittleEndian);
+                    uncompressedFile.Save(fname);
                 }
                 else
                 {
