@@ -1,5 +1,5 @@
 ﻿// THIS CODE BELONGS TO Radiation Oncology Intellectual Systems and Services LLC
-// Copyright (c) 2015, ROISS LLC. All rights reserved
+// Copyright (c) 2015-21, ROISS LLC. All rights reserved
 //
 // Author: Gennady Gorlachev (ggorlachev@roiss.ru)
 //---------------------------------------------------------------------------
@@ -7,9 +7,9 @@
 // (https://github.com/fo-dicom/fo-dicom)")
 //---------------------------------------------------------------------------
 
-using Dicom;
-using Dicom.Imaging;
-using Dicom.Imaging.Codec;
+using FellowOakDicom;
+using FellowOakDicom.Imaging;
+using FellowOakDicom.Imaging.Codec;
 using System;
 using System.IO;
 using System.Linq;
@@ -155,7 +155,7 @@ namespace dcmM2S
                         // Instance UID is formed from original file plus dot and frame number
                         templateObject.FileMetaInfo.AddOrUpdate(DicomTag.MediaStorageSOPInstanceUID, mediaSopInstUid + '.' + i.ToString());
                         templateObject.Dataset.AddOrUpdate(DicomTag.SOPInstanceUID, sopInstUid + '.' + i.ToString());
-                        templateObject.Dataset.AddOrUpdate(DicomTag.InstanceNumber, i+1);
+                        templateObject.Dataset.AddOrUpdate(DicomTag.InstanceNumber, i + 1);
 
                         // Technical information
                         var sqitem = mfseq.Items[i];
@@ -206,7 +206,7 @@ namespace dcmM2S
             if (imageNumber < 0)
                 throw new ApplicationException("Dicom file must have instance number");
 
-            var fname = string.Format("{0}_{1}/{2}_{3}_{4}/img_{5:0000}.dcm", 
+            var fname = string.Format("{0}_{1}/{2}_{3}_{4}/img_{5:0000}.dcm",
                 patName, studyDate, seriesNumber, seriesDescription, series_time, imageNumber);
 
             return CreateValidFileName(fname);
@@ -228,7 +228,7 @@ namespace dcmM2S
         static string CreateValidFileName(string fname)
         {
             var a = fname.ToArray();
-            for(int i=0; i< a.Length; i++)
+            for (int i = 0; i < a.Length; i++)
             {
                 var c = a[i];
                 if (c == '^' || c == '?') a[i] = '_';

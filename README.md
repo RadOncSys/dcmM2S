@@ -26,3 +26,9 @@ Output data will be organized under the hierarchy:
 ## Notes
 
 Program copies all dicom tags from original file except that we know in advance needed to decribse frames. Dicom items from that frames description sequence (0x5200, 0x9230) are copied to the root of output file dataset. Each exported file contains only its own frame pixel data.
+
+## Changes
+
+### 6-Oct-2021
+
+Upgrade to current development platform: .NET 5.0 / fo-dicom (5.0.0)
