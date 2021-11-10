@@ -95,7 +95,6 @@ namespace dcmM2S
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="outRoot"></param>
-        [Obsolete]
         static void ConvertFile(string fileFullName, string outRoot)
         {
             try
@@ -103,6 +102,15 @@ namespace dcmM2S
                 Console.WriteLine("Reading file: " + fileFullName);
 
                 DicomFile file = DicomFile.Open(fileFullName);
+
+                // Some users have deal with files saved without FileMetaInfo.
+                // We check this case and if so create some default FileMetaInfo.
+                // This is done through the creating a copy of DicomFile object with Dataset as an argument fo the constructor.
+                if (file.FileMetaInfo.Count() == 0)
+                {
+                    file = new DicomFile(file.Dataset);
+                }
+
                 ushort nframes = file.Dataset.GetSingleValueOrDefault(DicomTag.NumberOfFrames, (ushort)1);
 
                 // If file ocoursanally has only one frame we copy it with new name according to converter policy.
@@ -133,7 +141,6 @@ namespace dcmM2S
                     var templateObject = file.Clone();
 
                     // Base for instance uids
-                    var mediaSopInstUid = file.FileMetaInfo.GetSingleValueOrDefault(DicomTag.MediaStorageSOPInstanceUID, string.Empty);
                     var sopInstUid = file.Dataset.GetSingleValueOrDefault(DicomTag.SOPInstanceUID, string.Empty);
 
                     // One frame in output
@@ -153,7 +160,6 @@ namespace dcmM2S
                     for (ushort i = 0; i < nframes; i++)
                     {
                         // Instance UID is formed from original file plus dot and frame number
-                        templateObject.FileMetaInfo.AddOrUpdate(DicomTag.MediaStorageSOPInstanceUID, mediaSopInstUid + '.' + i.ToString());
                         templateObject.Dataset.AddOrUpdate(DicomTag.SOPInstanceUID, sopInstUid + '.' + i.ToString());
                         templateObject.Dataset.AddOrUpdate(DicomTag.InstanceNumber, i + 1);
 

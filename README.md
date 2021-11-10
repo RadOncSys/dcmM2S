@@ -32,3 +32,7 @@ Program copies all dicom tags from original file except that we know in advance 
 ### 6-Oct-2021
 
 Upgrade to current development platform: .NET 5.0 / fo-dicom (5.0.0)
+
+### 10-Oct-2021
+
+Adding support for DICOM files without Meta Information.
