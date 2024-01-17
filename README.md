@@ -36,3 +36,7 @@ Upgrade to current development platform: .NET 5.0 / fo-dicom (5.0.0)
 ### 10-Oct-2021
 
 Adding support for DICOM files without Meta Information.
+
+### 17-Jan-2024
+
+Update references to .NET 8.0 / fo-dicom 5.1.2
